@@ -20,6 +20,7 @@ void setup() {
   Serial.begin(115200);
   pinMode(PIR_PIN, INPUT);
 
+  // sadece pinleri baslatiyor. rf takili olmasa bile calisiyor
   if (!driverTx.init()) {
     Serial.println("RF driver initialization failed");
   }
@@ -28,7 +29,7 @@ void setup() {
 
 void loop() {
   int motionDetected = digitalRead(PIR_PIN);
-  Serial.println(motionDetected);
+  
   if (motionDetected == 1) {
     driverTx.send((uint8_t *)msg, strlen(msg));
     driverTx.waitPacketSent();
@@ -52,7 +53,6 @@ void setup() {
   Serial.begin(115200);
   pinMode(LED_PIN, OUTPUT);
 
-  // sadece pinleri baslatiyor. rf takili olmasa bile calisiyor
   if (!driverRx.init()) {
     Serial.println("RF driver initialization failed");
   }
@@ -60,17 +60,12 @@ void setup() {
 }
 
 void loop() {
-  //uint8_t buf[RH_ASK_MAX_MESSAGE_LEN];
   uint8_t buf[10];
   uint8_t buflen = sizeof(buf);
 
   if (driverRx.recv(buf, &buflen)) {
-    //buf[buflen] = '\0';
-    //Serial.print("Received: ");
-    //Serial.println((char*)buf);
-
     digitalWrite(LED_PIN, HIGH);
-    delay(500);
+    delay(1500);
     digitalWrite(LED_PIN, LOW);
   }
 }
