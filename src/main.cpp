@@ -39,12 +39,12 @@ void loop() {
 #elif RX_MODE
 
 #include <Arduino.h>
-//#include <ESP8266WiFi.h>
+#include <ESP8266WiFi.h>
 #include <RH_ASK.h>
 #include <SPI.h>
 
-#define RECEIVER_PIN 3
-#define LED_PIN 2
+#define RECEIVER_PIN D6
+#define LED_PIN D5
 
 RH_ASK driverRx(2000, RECEIVER_PIN, 4, 5, false);
 
