@@ -1,14 +1,15 @@
-// #define TX_MODE 1
- #define RX_MODE 2
+ #define TX_MODE 1
+// #define RX_MODE 2
 
-const char msg[] = "LED ON";
+#include <Arduino.h>
+#include <RH_ASK.h>
+#include <SPI.h>
+
+const char* msg = "1";
 
 #ifdef TX_MODE
 
-#include <Arduino.h>
 #include <ESP8266WiFi.h>
-#include <RH_ASK.h>
-#include <SPI.h>
 
 #define PIR_PIN D5
 #define TRANSMITTER_PIN D6
@@ -29,7 +30,7 @@ void setup() {
 
 void loop() {
   int motionDetected = digitalRead(PIR_PIN);
-  
+
   if (motionDetected == 1) {
     driverTx.send((uint8_t *)msg, strlen(msg));
     driverTx.waitPacketSent();
@@ -39,15 +40,15 @@ void loop() {
 
 #elif RX_MODE
 
-#include <Arduino.h>
 #include <ESP8266WiFi.h>
-#include <RH_ASK.h>
-#include <SPI.h>
 
 #define RECEIVER_PIN D6
 #define LED_PIN D5
 
 RH_ASK driverRx(2000, RECEIVER_PIN, 4, 5, false);
+
+uint8_t buf[5];
+uint8_t buflen = sizeof(buf);
 
 void setup() {
   Serial.begin(115200);
@@ -60,9 +61,6 @@ void setup() {
 }
 
 void loop() {
-  uint8_t buf[10];
-  uint8_t buflen = sizeof(buf);
-
   if (driverRx.recv(buf, &buflen)) {
     digitalWrite(LED_PIN, HIGH);
     delay(1500);
