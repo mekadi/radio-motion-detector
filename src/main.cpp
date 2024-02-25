@@ -1,5 +1,5 @@
- #define TX_MODE 1
-// #define RX_MODE 2
+// #define TX_MODE 1
+ #define RX_MODE 2
 
 #include <Arduino.h>
 #include <RH_ASK.h>
@@ -63,7 +63,7 @@ void setup() {
 void loop() {
   if (driverRx.recv(buf, &buflen)) {
     digitalWrite(LED_PIN, HIGH);
-    delay(1500);
+    delay(1000);
     digitalWrite(LED_PIN, LOW);
   }
 }
