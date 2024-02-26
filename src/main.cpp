@@ -7,6 +7,15 @@
 
 const char* msg = "1";
 
+void blinkLed(uint8_t ledPin, uint8_t blinkCount, uint32_t oneBlinkTime) {
+  for (int i = 0; i < blinkCount; i++) {
+    digitalWrite(ledPin, HIGH);
+    delay(oneBlinkTime / 2);
+    digitalWrite(ledPin, LOW);
+    delay(oneBlinkTime / 2);
+  }
+}
+
 #ifdef TX_MODE
 
 #include <ESP8266WiFi.h>
@@ -62,9 +71,7 @@ void setup() {
 
 void loop() {
   if (driverRx.recv(buf, &buflen)) {
-    digitalWrite(LED_PIN, HIGH);
-    delay(1000);
-    digitalWrite(LED_PIN, LOW);
+    blinkLed(LED_PIN, 10, 100);
   }
 }
 
