@@ -78,7 +78,7 @@ void loop() {
     if (digitalRead(SWITCH_PIN) == HIGH)
       blink(LED_PIN, 10, 100);
     else {
-      blink(BUZZER_PIN, 1, 5);
+      blink(BUZZER_PIN, 1, 2);
     }
   }
 }
