@@ -7,11 +7,11 @@
 
 const char* msg = "1";
 
-void blinkLed(uint8_t ledPin, uint8_t blinkCount, uint32_t oneBlinkTime) {
+void blink(uint8_t pin, uint8_t blinkCount, uint32_t oneBlinkTime) {
   for (int i = 0; i < blinkCount; i++) {
-    digitalWrite(ledPin, HIGH);
+    digitalWrite(pin, HIGH);
     delay(oneBlinkTime / 2);
-    digitalWrite(ledPin, LOW);
+    digitalWrite(pin, LOW);
     delay(oneBlinkTime / 2);
   }
 }
@@ -53,6 +53,8 @@ void loop() {
 
 #define RECEIVER_PIN D6
 #define LED_PIN D5
+#define SWITCH_PIN D2
+#define BUZZER_PIN D1
 
 RH_ASK driverRx(2000, RECEIVER_PIN, 4, 5, false);
 
@@ -62,6 +64,8 @@ uint8_t buflen = sizeof(buf);
 void setup() {
   Serial.begin(115200);
   pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  pinMode(SWITCH_PIN, INPUT);
 
   if (!driverRx.init()) {
     Serial.println("RF driver initialization failed");
@@ -71,7 +75,11 @@ void setup() {
 
 void loop() {
   if (driverRx.recv(buf, &buflen)) {
-    blinkLed(LED_PIN, 10, 100);
+    if (digitalRead(SWITCH_PIN) == HIGH)
+      blink(LED_PIN, 10, 100);
+    else {
+      blink(BUZZER_PIN, 1, 50);
+    }
   }
 }
 
