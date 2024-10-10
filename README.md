@@ -1,4 +1,4 @@
-# Motion Notifier with Radio Transmitter(Tx) and Receiver(Rx)
+# Motion Notifier with Radio Transmitter(Tx) and Receiver(Rx) w/ STRX882&HC-SR501
 
 <img src="img/img1.jpeg" style="width:100%"/>
 <img src="img/img2.jpeg" style="width:100%"/>
